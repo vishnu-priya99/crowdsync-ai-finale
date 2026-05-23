@@ -5,7 +5,7 @@
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Firebase%20Hosting-orange?style=for-the-badge&logo=firebase)](https://gapl-496213-ce73f.web.app)
 [![Backend](https://img.shields.io/badge/Backend-Cloud%20Run-blue?style=for-the-badge&logo=googlecloud)](https://crowdsync-backend-990647004439.us-central1.run.app/health)
-[![Gemini](https://img.shields.io/badge/Powered%20By-Gemini%201.5%20Flash-purple?style=for-the-badge&logo=google)](https://ai.google.dev/)
+[![Gemini](https://img.shields.io/badge/Powered%20By-Gemini%202.5%20Flash-purple?style=for-the-badge&logo=google)](https://ai.google.dev/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
 ---
@@ -51,7 +51,7 @@ Massive crowds at cricket matches create dangerous bottlenecks, severe security 
 
 ## 🤖 Agentic AI Design
 
-The core of CrowdSync AI is a **Gemini 1.5 Flash** powered orchestration agent built with the official `@google/generative-ai` SDK. It uses:
+The core of CrowdSync AI is a **Gemini 2.5 Flash** powered orchestration agent built with the official `@google/generative-ai` SDK. It uses:
 
 - **Function Calling (Tool Use):** The agent autonomously invokes stadium tools instead of just responding with text
 - **Multi-Turn Reasoning Loop:** The agent iterates up to 5 reasoning cycles per command, calling multiple tools in sequence
