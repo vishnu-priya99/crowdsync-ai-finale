@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import StadiumSimulator from "./simulator.js";
-import { runAgentSession } from "./agent.js";
+import { runAgentSession, runAutonomousMonitor } from "./agent.js";
 
 // Load environment variables (.env file)
 dotenv.config();
@@ -97,6 +97,19 @@ const VALID_SERVICE_TYPES = new Set(["Security", "Medical", "Fire Rescue"]);
 
 // Initialize the simulator
 const simulator = new StadiumSimulator();
+
+// ─────────────────────────────────────────────────────────────────────────────
+// AUTONOMOUS MONITORING — Agents self-trigger every 20 seconds
+// No operator input required. Stores latest auto-action for frontend polling.
+// ─────────────────────────────────────────────────────────────────────────────
+let latestAutonomousAction = null;
+
+setInterval(async () => {
+  await runAutonomousMonitor(simulator, (action) => {
+    latestAutonomousAction = { ...action, detectedAt: new Date().toISOString() };
+    console.log(`🤖 Autonomous Agent Action: ${action.logs.length} steps executed.`);
+  });
+}, 20000); // Run every 20 seconds
 
 // ─────────────────────────────────────────────────────────────
 // API ENDPOINTS
@@ -202,7 +215,12 @@ app.post("/api/chat", rateLimit, async (req, res) => {
   }
 });
 
-// 7. Health check endpoint (for Cloud Run uptime monitoring)
+// 7. Autonomous agent log endpoint (frontend polls this to show proactive actions)
+app.get("/api/autonomous-log", (req, res) => {
+  res.json({ action: latestAutonomousAction });
+});
+
+// 8. Health check endpoint (for Cloud Run uptime monitoring)
 app.get("/health", (req, res) => {
   res.status(200).json({
     status: "healthy",
